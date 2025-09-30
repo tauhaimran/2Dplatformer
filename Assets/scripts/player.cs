@@ -15,11 +15,21 @@ public class player : MonoBehaviour
         body = GetComponent<Rigidbody2D>();        
         animator = GetComponent<Animator>();
         animator.SetBool("jump", false);
+        // Prevent physics from rotating the player sprite when hitting things or moving fast
+        if (body != null)
+        {
+            body.freezeRotation = true; // Unity convenience to lock rotation
+            body.angularVelocity = 0f; // ensure no residual spin
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // ensure angular velocity remains zero in case other forces try to rotate the body
+        if (body != null && body.angularVelocity != 0f)
+            body.angularVelocity = 0f;
+
         //move 2d player
         body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
 
