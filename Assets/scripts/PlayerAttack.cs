@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public Animator animator;
     public GameObject FireBallPrefab;
     public GameObject firePoint;
+    
 
     void Start()
     {
@@ -36,8 +37,26 @@ public class PlayerAttack : MonoBehaviour
         //attack
         Debug.Log("attacking");
         animator.SetTrigger("attack");
-        //coolDownTimer = 0f;
-        
-        GameObject fireball = Instantiate(FireBallPrefab, firePoint.transform.position, Quaternion.identity);
+        coolDownTimer = 0f;
+        /// <summary>
+        /// Represents an object in the Unity scene. GameObjects are the fundamental objects in Unity that can represent characters, props, scenery, cameras, waypoints, and more.
+        /// </summary>
+        if (FireBallPrefab == null)
+        {
+            Debug.LogError("FireBallPrefab not assigned on PlayerAttack!");
+            return;
+        }
+
+        if (firePoint == null)
+        {
+            Debug.LogError("firePoint not assigned on PlayerAttack!");
+            return;
+        }
+
+        // Instantiate
+        GameObject fireballInstantiated = GameObject.Instantiate(FireBallPrefab, firePoint.transform.position, Quaternion.identity);
+        //setting the direction of the fireball based on player direction
+        fireballInstantiated.GetComponent<fireball>().setDirection(playerMovement.getDirection());
+        //fireballInstantiated.setActive(true);
     }
 }

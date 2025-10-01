@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     public LayerMask groundLayer;
 
+    private int x_direction = 1; //1 is right, -1 is left
+
 
     // Start is called before the first frame update
     void Start()
@@ -67,10 +69,12 @@ public class PlayerMovement : MonoBehaviour
         if (HorizontalInput > 0.01f)//body.velocity.x > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
+            x_direction = 1;
         }
-        else //if (body.velocity.x < 0)
+        else if (body.velocity.x < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
+            x_direction = -1;
         }
 
         if (Mathf.Abs(body.velocity.x) > 0.01f && isGrounded())
@@ -95,5 +99,10 @@ public class PlayerMovement : MonoBehaviour
     public bool canAttack()
     {
         return (Input.GetAxis("Horizontal") == 0) && isGrounded();
+    }
+
+    public int getDirection()
+    {
+        return x_direction;
     }
 }
