@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     public float speed = 5f;
@@ -94,6 +94,6 @@ public class player : MonoBehaviour
 
     public bool canAttack()
     {
-        return Mathf.Abs(body.velocity.x) > 0.01f && isGrounded();
+        return (Input.GetAxis("Horizontal") == 0) && isGrounded();
     }
 }
