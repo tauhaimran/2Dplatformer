@@ -6,11 +6,13 @@ public class fireball : MonoBehaviour
 {
     // Start is called before the first frame update
     private Animator animator;
-    bool moving = true;
+    private Rigidbody2D body;
+    bool moving = false;
     private int x_direction = 1; //1 is right, -1 is left
     void Start()
     {
         animator = GetComponent<Animator>();
+        body = GetComponent<Rigidbody2D>();
         //this.gameObject.SetActive(true);
     }
 
@@ -19,10 +21,17 @@ public class fireball : MonoBehaviour
     {
         if (moving)
         {
-            if (x_direction == 1)
-                transform.Translate(Vector2.right * 10f * Time.deltaTime);
-            else
-                transform.Translate(Vector2.left * 10f * Time.deltaTime);
+
+             body.velocity = new Vector2(x_direction * 10f, body.velocity.y);
+            //if (x_direction == 1)
+                //body.velocity = new Vector2(10f, body.velocity.y);
+                //body.addForce2D(new Vector2(10f, 0f));
+                //transform.Translate(Vector2.right * 10f * Time.deltaTime);
+                //transform.Translate(Vector2.right * 10f * Time.deltaTime);
+           // else if (x_direction == -1)
+                //body.addForce2D(new Vector2(-10f, 0f));
+                //body.velocity = new Vector2(-10f, body.velocity.y);
+               // transform.Translate(Vector2.left * 10f * Time.deltaTime);
         }
 
 
@@ -44,9 +53,8 @@ public class fireball : MonoBehaviour
     public void setDirection(int dir)
     {
         x_direction = dir;
-        if (dir == -1)
-        {
-            transform.localScale = new Vector3(-1, 0.6f, 0.6f);
-        }
+        float xScale = Mathf.Abs(transform.localScale.x);
+        transform.localScale = new Vector3(dir * xScale, transform.localScale.y, transform.localScale.z);
+        moving = true;
     }
 }
