@@ -126,6 +126,8 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "trap" )
         {
             Debug.Log("Player hit trap");
+            animator.SetBool("walk", false);
+            animator.SetBool("jump", false);
             death();
             //respawn();
 
