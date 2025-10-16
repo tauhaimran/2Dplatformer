@@ -17,7 +17,8 @@ public class MeleeEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,7 +31,8 @@ public class MeleeEnemy : MonoBehaviour
         {   
             //attack
             //cooldownTimer = 0;
-            //animator.SetTrigger("attack");
+            animator.SetTrigger("meleeattack");
+            //cooldownTimer = 0;
         }
 
         
@@ -39,7 +41,7 @@ public class MeleeEnemy : MonoBehaviour
     private bool PlayerInSight()
     {
         //check if player in sight
-        RaycastHit2D hit = Physics2D.BoxCast( boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0, playerLayer );
+        RaycastHit2D hit = Physics2D.BoxCast( boxCollider.bounds.center +transform.right *range * transform.localScale.x, boxCollider.bounds.size, 0, Vector2.left, 0, playerLayer );
         return hit.collider != null;
     }
 
