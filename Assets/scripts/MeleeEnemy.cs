@@ -10,6 +10,7 @@ public class MeleeEnemy : MonoBehaviour
     [SerializeField] private float attackCooldown = 1.5f;
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask playerLayer;
+    public float range = 1f;
     private float cooldownTimer = Mathf.Infinity;
     private Animator animator;
 
@@ -45,6 +46,6 @@ public class MeleeEnemy : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube( boxCollider.bounds.center, boxCollider.bounds.size );
+        Gizmos.DrawWireCube( boxCollider.bounds.center + transform.right * range , boxCollider.bounds.size );
     }
 }
