@@ -5,17 +5,46 @@ using UnityEngine;
 public class MeleeEnemy : MonoBehaviour
 {
 
-    
+    [SerializeField] private int health = 3;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private float attackCooldown = 1.5f;
+    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private LayerMask playerLayer;
+    private float cooldownTimer = Mathf.Infinity;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        cooldownTimer += Time.deltaTime;
+
+        //Attack if cool satisfied AND player is in sight
+        if ( PlayerInSight() && cooldownTimer >= attackCooldown) //
+        {   
+            //attack
+            //cooldownTimer = 0;
+            //animator.SetTrigger("attack");
+        }
+
         
+    }
+
+    private bool PlayerInSight()
+    {
+        //check if player in sight
+        RaycastHit2D hit = Physics2D.BoxCast( boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, 0, playerLayer );
+        return hit.collider != null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube( boxCollider.bounds.center, boxCollider.bounds.size );
     }
 }
