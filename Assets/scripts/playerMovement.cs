@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     private BoxCollider2D boxCollider;
     public LayerMask groundLayer;
+    public GameObject CheckPoint;
 
     private int x_direction = 1; //1 is right, -1 is left
 
@@ -104,5 +105,30 @@ public class PlayerMovement : MonoBehaviour
     public int getDirection()
     {
         return x_direction;
+    }
+
+    public void death()
+    {
+        animator.SetTrigger("death");
+        this.enabled = false; //disable player movement
+        body.velocity = new Vector2(0, 0); //stop moving
+    }
+
+    public void respawn()
+    {
+        this.enabled = true; //enable player movement
+        transform.position = CheckPoint.transform.position;
+        animator.SetTrigger("reset");
+    }
+    //collision checker
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "trap" )
+        {
+            Debug.Log("Player hit trap");
+            death();
+            //respawn();
+
+        }
     }
 }
