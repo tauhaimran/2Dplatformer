@@ -4,52 +4,66 @@ using UnityEngine;
 
 public class fireball : MonoBehaviour
 {
-    // Start is called before the first frame update
     private Animator animator;
     private Rigidbody2D body;
-    bool moving = false;
-    private int x_direction = 1; //1 is right, -1 is left
-    void Start()
+
+    [Header("Audio")]
+    public AudioClip EXPLOSIONsound;
+    public AudioSource audioSource;
+
+    private bool moving = false;
+    private int x_direction = 1; // 1 = right, -1 = left
+
+    void Awake()
     {
+        // Always cache these early and safely
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        //this.gameObject.SetActive(true);
+        audioSource = GetComponent<AudioSource>();
+
+        if (body == null)
+            Debug.LogError($"[fireball] Rigidbody2D missing on {name}");
+        if (animator == null)
+            Debug.LogError($"[fireball] Animator missing on {name}");
+        
+        if (audioSource == null)
+        {
+            // Auto-add AudioSource so runtime clone can play explosion audio even if prefab missed it
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+            Debug.LogWarning($"[fireball] AudioSource was missing on {name}; added automatically.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (moving)
+        if (moving && body != null)
         {
-
-             body.velocity = new Vector2(x_direction * 10f, body.velocity.y);
-            //if (x_direction == 1)
-                //body.velocity = new Vector2(10f, body.velocity.y);
-                //body.addForce2D(new Vector2(10f, 0f));
-                //transform.Translate(Vector2.right * 10f * Time.deltaTime);
-                //transform.Translate(Vector2.right * 10f * Time.deltaTime);
-           // else if (x_direction == -1)
-                //body.addForce2D(new Vector2(-10f, 0f));
-                //body.velocity = new Vector2(-10f, body.velocity.y);
-               // transform.Translate(Vector2.left * 10f * Time.deltaTime);
+            body.velocity = new Vector2(x_direction * 10f, body.velocity.y);
         }
-
-
     }
 
-    //on any collision set trigger to explode
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("fireball hit " + collision.gameObject.name);
-        animator.SetTrigger("explode");
+        Debug.Log($"[fireball] hit {collision.gameObject.name}");
+
+        if (audioSource && EXPLOSIONsound)
+            audioSource.PlayOneShot(EXPLOSIONsound);
+
+        if (animator)
+            animator.SetTrigger("explode");
+
         moving = false;
-        //Destroy(gameObject);
+        body.velocity = Vector2.zero;
     }
+
+    // Called by animation event after explode animation ends
     public void DestroyFireball()
     {
-        Destroy(this.gameObject);
+        // Instead of Destroy() for pooling — disable it
+        gameObject.SetActive(false);
     }
-    
+
     public void setDirection(int dir)
     {
         x_direction = dir;
