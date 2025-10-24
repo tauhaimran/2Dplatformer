@@ -21951,7 +21951,7 @@ MonoBehaviour:
   CheckPoint: {fileID: 2121611577}
   jumpSound: {fileID: 8300000, guid: e5a5392f03d51f944a836788344c8a41, type: 3}
   audioSource: {fileID: 2102448446}
-  dizzyFallThreshold: 2
+  dizzyFallThreshold: 5
   dizzyDuration: 1.5
   wallJumpForceX: 8
   wallJumpForceY: 12
