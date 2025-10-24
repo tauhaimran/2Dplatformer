@@ -594,9 +594,14 @@ MonoBehaviour:
   chosenCharacter: 0
   choiceStatusTexts:
   - {fileID: 289711356}
-  - {fileID: 980605021}
-  - {fileID: 314586630}
+  - {fileID: 1675100380}
+  - {fileID: 160799714}
   choiceStatus: 0100000000000000ffffffff
+  CharacterSelectButtons:
+  - {fileID: 1043878054}
+  - {fileID: 1296255763}
+  - {fileID: 856514511}
+  currentcharacterIndex: 0
 --- !u!1 &160799712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,7 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 0.18490559, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1829,7 +1834,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 856514512}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125381116}
+        m_TargetAssemblyTypeName: menu, Assembly-CSharp
+        m_MethodName: OnCharacterSelect
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &856514512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2220,7 +2237,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1043878055}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125381116}
+        m_TargetAssemblyTypeName: menu, Assembly-CSharp
+        m_MethodName: OnCharacterSelect
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1043878055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2735,7 +2764,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1296255764}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 125381116}
+        m_TargetAssemblyTypeName: menu, Assembly-CSharp
+        m_MethodName: OnCharacterSelect
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1296255764
 MonoBehaviour:
   m_ObjectHideFlags: 0
