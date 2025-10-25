@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;  //  for Button
 using TMPro; // For TMP text (you’ll connect it later)
 
 public class PlayerMovement : MonoBehaviour
@@ -46,8 +47,11 @@ public class PlayerMovement : MonoBehaviour
 
     public TMP_Text levelCompleteText;
 
-    public TMP_Button restartButton;
-    public TMP_Button quitButton;
+    public Button restartButton;
+    public TMP_Text restartButtonText;
+
+    public Button quitButton;
+    public TMP_Text quitButtonText;
 
     void Start()
     {
@@ -72,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (isDizzy) return;
-        if ( livesText <= 0 ) return;
+        if ( currentLives <= 0 ) return;
 
         if (body != null && body.angularVelocity != 0f)
             body.angularVelocity = 0f;
@@ -209,6 +213,8 @@ public class PlayerMovement : MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
         quitButton.gameObject.SetActive(true);
+        restartButtonText.gameObject.SetActive(true);
+        quitButtonText.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         // TODO: Add your GameOver UI or restart logic here
     }
