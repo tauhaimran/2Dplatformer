@@ -1,36 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; // For TMP text (you’ll connect it later)
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float speed = 5f;
-    public float crouchSpeedMultiplier = 0.5f; // NEW FEATURE
+    public float crouchSpeedMultiplier = 0.5f;
     private Rigidbody2D body;
     public Animator animator;
     private BoxCollider2D boxCollider;
     public LayerMask groundLayer;
-    public LayerMask wallLayer; // add this near your other public LayerMask fields
+    public LayerMask wallLayer;
     public GameObject CheckPoint;
     public AudioClip jumpSound;
     public AudioSource audioSource;
 
-
-    private int x_direction = 1; //1 is right, -1 is left
+    private int x_direction = 1;
 
     [Header("Dizzy & Fall")]
-    public float dizzyFallThreshold = 6f; 
-    public float dizzyDuration = 1.5f; 
+    public float dizzyFallThreshold = 6f;
+    public float dizzyDuration = 1.5f;
     private bool isDizzy = false;
-    private float lastGroundY; 
-    private bool wasGrounded; 
+    private float lastGroundY;
+    private bool wasGrounded;
 
     [Header("Wall Jump")]
-    public float wallJumpForceX = 8f; 
-    public float wallJumpForceY = 12f; 
-    public float wallCheckDistance = 0.4f; 
-    private bool isCrouching = false; 
+    public float wallJumpForceX = 8f;
+    public float wallJumpForceY = 12f;
+    public float wallCheckDistance = 0.4f;
+    private bool isCrouching = false;
+
+    // ----------------------------------------
+    [Header("Player Stats")]
+    public int maxLives = 3;
+    private int currentLives;
+    public int coinsCollected = 0;
+
+    [Header("UI References (Assign in Inspector)")]
+    public TMP_Text livesText;
+    public TMP_Text coinsText;
+
+    public TMP_Text gameOverText;
+
+    public TMP_Text levelCompleteText;
+
+    public TMP_Button restartButton;
+    public TMP_Button quitButton;
 
     void Start()
     {
@@ -46,24 +63,24 @@ public class PlayerMovement : MonoBehaviour
         }
 
         lastGroundY = transform.position.y;
+
+        // Initialize lives
+        currentLives = maxLives;
+        UpdateUI();
     }
 
     void Update()
     {
-        if (isDizzy) return; // — disable input when dizzy
+        if (isDizzy) return;
+        if ( livesText <= 0 ) return;
 
         if (body != null && body.angularVelocity != 0f)
             body.angularVelocity = 0f;
 
-        // -------- CROUCH SYSTEM (hold C key) --------
-        if (Input.GetKey(KeyCode.C))
-            isCrouching = true;
-        else
-            isCrouching = false;
-
+        // -------- CROUCH --------
+        isCrouching = Input.GetKey(KeyCode.C);
         animator.SetBool("crouch", isCrouching);
 
-        // Move 2D player
         float moveInput = Input.GetAxis("Horizontal");
         float currentSpeed = isCrouching ? speed * crouchSpeedMultiplier : speed;
         body.velocity = new Vector2(moveInput * currentSpeed, body.velocity.y);
@@ -73,21 +90,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                //playing the jump sound
                 audioSource.PlayOneShot(jumpSound);
-                
-                //actual jump
                 body.velocity = new Vector2(body.velocity.x, speed);
                 animator.SetBool("jump", true);
-
             }
         }
-        if (Mathf.Abs(body.velocity.y) < 0.001f)
-        {
-            animator.SetBool("jump", false);
-        }
 
-        // -------- Wall Jump (press jump near wall) --------
+        if (Mathf.Abs(body.velocity.y) < 0.001f)
+            animator.SetBool("jump", false);
+
+        // -------- Wall Jump --------
         if (!isGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             if (IsTouchingWall())
@@ -103,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
             body.velocity = new Vector2(body.velocity.x, -speed);
         }
 
-        // -------- Flip character --------
+        // -------- Flip --------
         if (moveInput > 0.01f)
         {
             transform.localScale = new Vector3(1, 1, 1);
@@ -116,27 +128,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // -------- Walk animation --------
-        if (Mathf.Abs(body.velocity.x) > 0.01f && isGrounded())
-            animator.SetBool("walk", true);
-        else
-            animator.SetBool("walk", false);
+        animator.SetBool("walk", Mathf.Abs(body.velocity.x) > 0.01f && isGrounded());
 
-        // -------- Fly Kick -------- ( when shift pressed anywhere)
-        //if key pressec once
+        // -------- Fly Kick --------
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-        {
             animator.SetTrigger("flykick");
-            //animator.SetBool("walk", false);
-            //animator.SetBool("jump", false);
-        }
 
-        // -------- Ground Check for Dizzy Fall --------
+        // -------- Dizzy Check --------
         bool grounded = isGrounded();
         if (!wasGrounded && grounded)
         {
             float fallDistance = lastGroundY - transform.position.y;
             if (fallDistance > dizzyFallThreshold)
-                StartCoroutine(DoDizzy()); // changed to start coroutine so dizzyDuration is honored
+                StartCoroutine(DoDizzy());
         }
 
         if (grounded)
@@ -149,76 +153,100 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isGrounded()
     {
-        if (boxCollider == null)
-            return false;
-
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 
+        if (boxCollider == null) return false;
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size,
                                              0f, Vector2.down, 0.1f, groundLayer);
         return hit.collider != null;
     }
 
-    private bool IsTouchingWall() // NEW: side-based check using wallLayer
+    private bool IsTouchingWall()
     {
-        if (boxCollider == null)
-            return false;
-
-        // origin at the side edge of the player's collider
+        if (boxCollider == null) return false;
         float facing = Mathf.Sign(transform.localScale.x);
         Vector2 origin = (Vector2)boxCollider.bounds.center + Vector2.right * (boxCollider.bounds.extents.x + 0.02f) * facing;
         Vector2 dir = Vector2.right * facing;
-
-        // debug draw
         Debug.DrawRay(origin, dir * wallCheckDistance, Color.red, 0.1f);
-
         RaycastHit2D hit = Physics2D.Raycast(origin, dir, wallCheckDistance, wallLayer);
         return hit.collider != null;
     }
 
-    private IEnumerator DoDizzy() //  coroutine to actually wait for dizzyDuration
+    private IEnumerator DoDizzy()
     {
-        if (isDizzy) yield break; // already dizzy, don't stack
-
+        if (isDizzy) yield break;
         isDizzy = true;
         animator.SetTrigger("dizzy");
-        if (body != null) body.velocity = Vector2.zero;
-
+        body.velocity = Vector2.zero;
         yield return new WaitForSeconds(dizzyDuration);
-
         isDizzy = false;
     }
 
-    public bool canAttack()
-    {
-        return (Input.GetAxis("Horizontal") == 0) && isGrounded();
-    }
-
-    public int getDirection()
-    {
-        return x_direction;
-    }
+    public bool canAttack() => (Input.GetAxis("Horizontal") == 0) && isGrounded();
+    public int getDirection() => x_direction;
 
     public void death()
     {
         animator.SetTrigger("death");
-        this.enabled = false;
-        body.velocity = new Vector2(0, 0);
+        body.velocity = Vector2.zero;
+        currentLives--;
+
+        UpdateUI();
+
+        if (currentLives > 0)
+            Invoke(nameof(respawn), 1.2f);
+        else
+            StartCoroutine(GameOver());
     }
 
     public void respawn()
     {
-        this.enabled = true;
         transform.position = CheckPoint.transform.position;
         animator.SetTrigger("reset");
     }
 
+    private IEnumerator GameOver()
+    {
+        Debug.Log("Game Over - no lives left!");
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        // TODO: Add your GameOver UI or restart logic here
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "trap")
+        if (collision.gameObject.CompareTag("trap"))
         {
             Debug.Log("Player hit trap");
             animator.SetBool("walk", false);
             animator.SetBool("jump", false);
             death();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("coin"))
+        {
+            coinsCollected++;
+            UpdateUI();
+            Destroy(other.gameObject);
+        }
+
+        //if (other.CompareTag("exit"))
+       // {
+            Debug.Log("Reached exit — level complete (handle scene transition here)");
+            // Leave functionality to you — e.g.:
+            // SceneManager.LoadScene("MainMenu");
+        //}
+    }
+
+    private void UpdateUI()
+    {
+        if (livesText != null)
+            livesText.text = "Lives: " + currentLives;
+
+        if (coinsText != null)
+            coinsText.text = "Coins: " + coinsCollected;
     }
 }
