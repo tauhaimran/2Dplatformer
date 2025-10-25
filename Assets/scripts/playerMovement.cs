@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;  //  for Button
 using TMPro; // For TMP text (you’ll connect it later)
+using UnityEngine.SceneManagement; // For scene management
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     public LayerMask wallLayer;
     public GameObject CheckPoint;
+
+    public GameObject exitDoor;
     public AudioClip jumpSound;
     public AudioSource audioSource;
 
@@ -189,12 +192,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void death()
     {
+
         animator.SetTrigger("death");
+        //set all movement to zero
+        this.enabled = false;
         body.velocity = Vector2.zero;
         currentLives--;
+        
 
         UpdateUI();
-
+        currentLives--;
         if (currentLives > 0)
             Invoke(nameof(respawn), 1.2f);
         else
@@ -202,9 +209,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void respawn()
-    {
+    { 
+        this.enabled = true;
         transform.position = CheckPoint.transform.position;
         animator.SetTrigger("reset");
+       
     }
 
     private IEnumerator GameOver()
@@ -237,14 +246,19 @@ public class PlayerMovement : MonoBehaviour
             coinsCollected++;
             UpdateUI();
             Destroy(other.gameObject);
+
+            if (coinsCollected >= 30)
+            {
+                levelCompleteText.gameObject.SetActive(true);
+                exitDoor.SetActive(true);
+            }
         }
 
-        //if (other.CompareTag("exit"))
-       // {
+        if (other.CompareTag("exit"))
+        {
             Debug.Log("Reached exit — level complete (handle scene transition here)");
-            // Leave functionality to you — e.g.:
-            // SceneManager.LoadScene("MainMenu");
-        //}
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
     private void UpdateUI()
