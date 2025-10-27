@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;  //  for Button
 using TMPro; // For TMP text (you’ll connect it later)
-using UnityEngine.SceneManagement; // For scene management
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     public LayerMask wallLayer;
     public GameObject CheckPoint;
+    public GameObject StartPoint;
 
     public GameObject exitDoor;
     public AudioClip jumpSound;
@@ -76,7 +77,8 @@ public class PlayerMovement : MonoBehaviour
         UpdateUI();
     }
 
-    void Update()
+
+        void Update()
     {
         if (isDizzy) return;
         if ( currentLives <= 0 ) return;
@@ -201,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         
 
         UpdateUI();
-        currentLives--;
+        //currentLives--;
         if (currentLives > 0)
             Invoke(nameof(respawn), 1.2f);
         else
@@ -268,5 +270,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (coinsText != null)
             coinsText.text = "Coins: " + coinsCollected;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
