@@ -28641,8 +28641,9 @@ GameObject:
   - component: {fileID: 1896783847}
   - component: {fileID: 1896783846}
   - component: {fileID: 1896783845}
+  - component: {fileID: 1896783853}
+  - component: {fileID: 1896783852}
   - component: {fileID: 1896783849}
-  - component: {fileID: 1896783844}
   - component: {fileID: 1896783848}
   - component: {fileID: 1896783850}
   - component: {fileID: 1896783851}
@@ -28653,51 +28654,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1896783844
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896783843}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.15655097, y: -0.5478904}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.12, y: 2.56}
-    newSize: {x: 5.12, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.4198518, y: 1.3486781}
-  m_EdgeRadius: 0
 --- !u!50 &1896783845
 Rigidbody2D:
   serializedVersion: 4
@@ -28891,6 +28847,145 @@ MonoBehaviour:
   coins: 0
   selectedCharacter: 0
   unlockedLevels: 1
+--- !u!60 &1896783852
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896783843}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 2.56}
+    newSize: {x: 5.12, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.20719078, y: -0.7229208}
+      - {x: 0.17605123, y: -0.69604945}
+      - {x: 0.2098251, y: -0.6342916}
+      - {x: 0.2251503, y: -0.6234124}
+      - {x: 0.32285923, y: -0.61197424}
+      - {x: 0.4011734, y: -0.5334346}
+      - {x: 0.42763793, y: -0.4767322}
+      - {x: 0.34103557, y: -0.3793285}
+      - {x: 0.30846673, y: -0.363829}
+      - {x: 0.30591828, y: -0.28372407}
+      - {x: 0.2790929, y: -0.24047661}
+      - {x: 0.39003977, y: -0.20468736}
+      - {x: 0.33963764, y: -0.20346656}
+      - {x: 0.2846637, y: -0.19416523}
+      - {x: 0.24492928, y: -0.15810035}
+      - {x: 0.24052504, y: -0.16369244}
+      - {x: 0.18992451, y: -0.15924287}
+      - {x: 0.24959846, y: -0.082582235}
+      - {x: 0.31679767, y: -0.04830078}
+      - {x: 0.25723314, y: 0.05786498}
+      - {x: 0.105566315, y: 0.06630111}
+      - {x: 0.03956455, y: 0.08233152}
+      - {x: -0.0066118017, y: 0.09311199}
+      - {x: -0.074901715, y: 0.1389326}
+      - {x: -0.12, y: 0.14999999}
+      - {x: -0.11126396, y: 0.032092467}
+      - {x: -0.20446627, y: -0.03194233}
+      - {x: -0.18907064, y: -0.10451697}
+      - {x: -0.364729, y: -0.10502198}
+      - {x: -0.37925524, y: -0.16490376}
+      - {x: -0.43806577, y: -0.20061994}
+      - {x: -0.40415907, y: -0.32980755}
+      - {x: -0.35492918, y: -0.5443262}
+      - {x: -0.8513222, y: -0.68603337}
+      - {x: -0.8215147, y: -0.6786777}
+      - {x: -0.51644385, y: -0.7288704}
+      - {x: -0.28399196, y: -0.7105773}
+      - {x: -0.18512163, y: -0.72661096}
+      - {x: -0.103991985, y: -0.7717072}
+      - {x: -0.03908819, y: -0.7181257}
+      - {x: -0.033414483, y: -0.8432219}
+      - {x: -0.07661097, y: -0.92435145}
+      - {x: -0.07906279, y: -1.0232216}
+      - {x: -0.021707252, y: -1.0743518}
+      - {x: 0.10991526, y: -1.2244663}
+      - {x: 0.13619846, y: -1.0376632}
+      - {x: 0.19032687, y: -0.9933286}
+      - {x: 0.1871202, y: -0.9670696}
+      - {x: 0.24762617, y: -0.9223315}
+  m_UseDelaunayMesh: 0
+--- !u!61 &1896783853
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896783843}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.074603796, y: -0.62057316}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.12, y: 2.56}
+    newSize: {x: 5.12, y: 2.56}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4207102, y: 1.1886032}
+  m_EdgeRadius: 0
 --- !u!1001 &1899438479
 PrefabInstance:
   m_ObjectHideFlags: 0
