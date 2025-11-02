@@ -77,6 +77,32 @@ public class PlayerMovement : MonoBehaviour
         UpdateUI();
     }
 
+    private string GetNextLevelName()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        
+        if (currentScene == "level 1") return "level 2";
+        if (currentScene == "level 2") return "level 3";
+        if (currentScene == "level 3") return "level 4";
+        if (currentScene == "level 4") return "level 5";
+        if (currentScene == "level 5") return "MainMenu";
+        
+        return "MainMenu";
+    }
+
+    private int GetCurrentLevelNumber()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        
+        if (currentScene == "level 1") return 1;
+        if (currentScene == "level 2") return 2;
+        if (currentScene == "level 3") return 3;
+        if (currentScene == "level 4") return 4;
+        if (currentScene == "level 5") return 5;
+        
+        return 0;
+    }
+
 
         void Update()
     {
@@ -246,6 +272,13 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("coin"))
         {
             coinsCollected++;
+            
+            // Add coins to playerManager for persistence
+            if (playerManager.Instance != null)
+            {
+                playerManager.Instance.AddCoins(1);
+            }
+            
             UpdateUI();
             Destroy(other.gameObject);
 
@@ -264,8 +297,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("exit"))
         {
-            Debug.Log("Reached exit — level complete (handle scene transition here)");
-            SceneManager.LoadScene("MainMenu");
+            Debug.Log("Level complete!");
+            
+            // Save coins and unlock next level
+            if (playerManager.Instance != null)
+            {
+                int currentLevel = GetCurrentLevelNumber();
+                
+                // Unlock next level if current level is completed
+                if (currentLevel > 0 && playerManager.Instance.unlockedLevels == currentLevel)
+                {
+                    playerManager.Instance.UnlockNextLevel();
+                    Debug.Log("Unlocked level " + (currentLevel + 1));
+                }
+            }
+            
+            // Load next level
+            string nextLevel = GetNextLevelName();
+            SceneManager.LoadScene(nextLevel);
         }
     }
 
@@ -281,5 +330,10 @@ public class PlayerMovement : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

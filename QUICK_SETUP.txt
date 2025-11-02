@@ -1,0 +1,72 @@
+═══════════════════════════════════════════════════════════════
+  QUICK SETUP CHECKLIST - Level Progression & Coins System
+═══════════════════════════════════════════════════════════════
+
+✓ CODE CHANGES COMPLETE - All scripts have been updated!
+
+NOW YOU NEED TO DO IN UNITY:
+
+□ 1. ADD SCENES TO BUILD SETTINGS
+   - File → Build Settings
+   - Drag these scenes in order:
+     • MainMenu
+     • level 1
+     • level 2
+     • level 3
+     • level 4
+     • level 5
+
+□ 2. SETUP MAIN MENU SCENE
+   - Open MainMenu scene
+   - Create empty GameObject named "PlayerManager"
+   - Add playerManager.cs script to it
+   - Find your menu GameObject (has menu.cs script)
+   - Create a TextMeshPro text for coins (or use existing)
+   - Drag that text into "Total Coins Text" field in menu.cs
+
+□ 3. VERIFY LEVEL EXITS (Each level 1-5)
+   - Exit door/portal must have:
+     ✓ Tag: "exit"
+     ✓ Collider2D with "Is Trigger" enabled
+
+□ 4. VERIFY COINS (Already should be done)
+   - Each coin must have:
+     ✓ Tag: "coin"
+     ✓ Collider2D with "Is Trigger" enabled
+
+□ 5. CONNECT BUTTONS (Optional but recommended)
+   - In MainMenu, create empty GameObject named "LevelLoader"
+   - Add LevelLoader.cs script to it
+   - For each level button:
+     • Add onClick event
+     • Drag LevelLoader GameObject
+     • Select: LevelLoader → LoadLevel(int)
+     • Set parameter: 1, 2, 3, 4, or 5
+
+□ 6. CONNECT RESTART/QUIT BUTTONS (In each level)
+   - Restart Button onClick → Player → RestartLevel()
+   - Quit Button onClick → Player → QuitToMainMenu()
+
+═══════════════════════════════════════════════════════════════
+
+WHAT NOW WORKS:
+
+✓ Level 1 → Level 2 → Level 3 → Level 4 → Level 5 → MainMenu
+✓ Coins collected are saved to total (persistent across levels)
+✓ Total coins displayed in main menu
+✓ Levels unlock as you complete previous levels
+✓ Progress saved using PlayerPrefs (survives game restart)
+✓ Level buttons locked/unlocked automatically
+
+═══════════════════════════════════════════════════════════════
+
+TO TEST:
+1. Play level 1, collect coins, reach exit
+2. Should auto-load level 2
+3. Go back to main menu
+4. Check: Total coins displayed, level 2 unlocked
+
+TO RESET PROGRESS (for testing):
+- In Unity Console, type: playerManager.Instance.ResetData();
+
+═══════════════════════════════════════════════════════════════

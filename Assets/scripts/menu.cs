@@ -19,17 +19,41 @@ public class menu : MonoBehaviour
     public Button[] CharacterSelectButtons;
     public int currentcharacterIndex = 0;
 
+    [Header(">> COIN DISPLAY")]
+    public TMP_Text totalCoinsText;         // Display total coins in main menu
+
     // Start is called before the first frame update
     void Start()
     {
+        LoadPlayerData();
         SetupLevels();
         SetupPlayers();
+    }
+
+    void LoadPlayerData()
+    {
+        if (playerManager.Instance != null)
+        {
+            unlockedLevels = playerManager.Instance.unlockedLevels;
+            currentcharacterIndex = playerManager.Instance.selectedCharacter;
+            chosenCharacter = playerManager.Instance.selectedCharacter;
+            
+            // Update coin display
+            if (totalCoinsText != null)
+            {
+                totalCoinsText.text = "Total Coins: " + playerManager.Instance.coins;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        // Update coin display in real-time
+        if (totalCoinsText != null && playerManager.Instance != null)
+        {
+            totalCoinsText.text = "Total Coins: " + playerManager.Instance.coins;
+        }
     }
 
     //function to setup levels

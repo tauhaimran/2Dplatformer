@@ -8,6 +8,7 @@ TagManager:
   - coin
   - exit
   - checkpoint
+  - MovingTile
   layers:
   - Default
   - TransparentFX
