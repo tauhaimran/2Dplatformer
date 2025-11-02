@@ -68,7 +68,7 @@ public class menu : MonoBehaviour
             }
             else if (choiceStatus[i] == -1) // locked
             {
-                choiceStatusTexts[i].text = "unlock at Level " + (i + 2); // assuming first character is always unlocked
+                choiceStatusTexts[i].text = "unlock: " + (i + 2); // assuming first character is always unlocked
             }
         }
     }
