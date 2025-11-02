@@ -7,6 +7,7 @@ TagManager:
   - trap
   - coin
   - exit
+  - checkpoint
   layers:
   - Default
   - TransparentFX

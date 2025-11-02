@@ -256,6 +256,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if( other.CompareTag("checkpoint"))
+        {
+            CheckPoint.transform.position = other.transform.position;
+            Debug.Log("Checkpoint reached!");
+        }
+
         if (other.CompareTag("exit"))
         {
             Debug.Log("Reached exit — level complete (handle scene transition here)");

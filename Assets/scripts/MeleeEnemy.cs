@@ -11,6 +11,11 @@ public class MeleeEnemy : MonoBehaviour
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask playerLayer;
     public float range = 1f;
+    public int walkRange = 5;
+    public float moveSpeed = 2f;
+
+    private bool LefttoRight = true;
+
     private float cooldownTimer = Mathf.Infinity;
     private Animator animator;
 
@@ -27,12 +32,35 @@ public class MeleeEnemy : MonoBehaviour
         cooldownTimer += Time.deltaTime;
 
         //Attack if cool satisfied AND player is in sight
-        if ( PlayerInSight() && cooldownTimer >= attackCooldown) //
-        {   
+        if (PlayerInSight() && cooldownTimer >= attackCooldown) //
+        {
             //attack
             //cooldownTimer = 0;
+            animator.SetBool("moving", false);
             animator.SetTrigger("meleeattack");
             //cooldownTimer = 0;
+        }
+        else
+        {animator.SetBool("moving", true);
+            //move left and right within walkRange
+            if (LefttoRight)
+            {
+                transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+                if (transform.position.x >= walkRange)
+                {
+                    LefttoRight = false;
+                    Flip();
+                }
+            }
+            else
+            {
+                transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+                if (transform.position.x <= -walkRange)
+                {
+                    LefttoRight = true;
+                    Flip();
+                }
+            }
         }
 
         
@@ -48,6 +76,13 @@ public class MeleeEnemy : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube( boxCollider.bounds.center + transform.right * range , boxCollider.bounds.size );
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range, boxCollider.bounds.size);
+    }
+    
+    private void Flip()
+    {
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
     }
 }
