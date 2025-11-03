@@ -614,7 +614,7 @@ MonoBehaviour:
   - {fileID: 1769669690}
   - {fileID: 181902550}
   - {fileID: 1982358585}
-  unlockedLevels: 1
+  unlockedLevels: 5
   chosenCharacter: 0
   choiceStatusTexts:
   - {fileID: 289711356}
