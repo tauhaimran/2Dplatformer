@@ -339,7 +339,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1870516537}
         m_TargetAssemblyTypeName: playerManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1870516537}
         m_TargetAssemblyTypeName: playerManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -978,7 +978,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1870516537}
         m_TargetAssemblyTypeName: playerManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -1415,7 +1415,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1870516537}
         m_TargetAssemblyTypeName: playerManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -1623,7 +1623,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1870516537}
         m_TargetAssemblyTypeName: playerManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5

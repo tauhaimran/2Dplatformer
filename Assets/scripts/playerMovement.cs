@@ -298,12 +298,12 @@ public class PlayerMovement : MonoBehaviour
         if (other.CompareTag("exit"))
         {
             Debug.Log("Level complete!");
-            
+
             // Save coins and unlock next level
             if (playerManager.Instance != null)
             {
                 int currentLevel = GetCurrentLevelNumber();
-                
+
                 // Unlock next level if current level is completed
                 if (currentLevel > 0 && playerManager.Instance.unlockedLevels == currentLevel)
                 {
@@ -313,8 +313,9 @@ public class PlayerMovement : MonoBehaviour
             }
             
             // Load next level
-            string nextLevel = GetNextLevelName();
-            SceneManager.LoadScene(nextLevel);
+            //string nextLevel = GetNextLevelName();
+            //loading the main menu now
+            SceneManager.LoadScene("Main Menu");
         }
     }
 
