@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerManager : MonoBehaviour
 {
     public static playerManager Instance;
+    public SpriteRenderer spriteRenderer; // for color tinting
 
     [Header("Player Data")]
     public int coins = 0;
@@ -24,6 +25,34 @@ public class playerManager : MonoBehaviour
         {
             Destroy(gameObject); // avoid duplicates
         }
+
+        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        
+        if (currentScene != "MainMenu")
+        {
+            
+                spriteRenderer = GetComponent<SpriteRenderer>();
+            int selectedCharacter = PlayerPrefs.GetInt("SelectedCharacter");
+            // Apply tint based on selection
+            if (selectedCharacter == 0)
+            {
+                spriteRenderer.color = Color.white; // no tint
+            }
+            else if (selectedCharacter == 1)
+            {
+                spriteRenderer.color = Color.green; // green tint
+            }
+            else if (selectedCharacter == 2)
+            {
+                spriteRenderer.color = Color.red; // red tint
+            }
+            else
+            {
+                spriteRenderer.color = Color.white; // default fallback
+            }
+
+        }
+        
     }
 
     // --- Called by main menu or gameplay when coins or character change ---

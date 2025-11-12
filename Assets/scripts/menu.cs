@@ -135,6 +135,7 @@ public class menu : MonoBehaviour
         }
     }
 
+    PlayerPrefs.SetInt("SelectedCharacter", index);
     Debug.Log("Character " + (index + 1) + " selected!");
 }
 

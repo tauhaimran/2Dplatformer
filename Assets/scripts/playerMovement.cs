@@ -107,7 +107,24 @@ public class PlayerMovement : MonoBehaviour
         void Update()
     {
         if (isDizzy) return;
-        if ( currentLives <= 0 ) return;
+        if (currentLives <= 0) return;
+
+
+        //DEV SECRETS TO TEST OUT GAMEPLAY
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        //if F5 reset all progress
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("PlayerPrefs reset - all progress cleared.");
+            SceneManager.LoadScene("MainMenu");
+        }
+
+
 
         if (body != null && body.angularVelocity != 0f)
             body.angularVelocity = 0f;
@@ -315,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
             // Load next level
             //string nextLevel = GetNextLevelName();
             //loading the main menu now
-            SceneManager.LoadScene("Main Menu");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

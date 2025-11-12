@@ -23847,7 +23847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &634633929
 Transform:
   m_ObjectHideFlags: 0
@@ -29688,6 +29688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676c6c2c395581d4e85ecbf09eb2e500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
   coins: 0
   selectedCharacter: 0
   unlockedLevels: 1
