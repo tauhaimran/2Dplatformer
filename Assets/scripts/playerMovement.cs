@@ -309,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
         if( other.CompareTag("checkpoint"))
         {
             CheckPoint.transform.position = other.transform.position;
+            //CheckPoint.transform.position = StartPoint.transform.position;
             Debug.Log("Checkpoint reached!");
         }
 
